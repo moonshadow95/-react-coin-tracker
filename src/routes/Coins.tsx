@@ -1,100 +1,98 @@
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import styled from "styled-components";
+import React from 'react'
+import styled from "styled-components"
+import {Link} from "react-router-dom"
+import {useQuery} from "react-query"
+import {fetchCoins} from "../api"
+import {Helmet} from "react-helmet-async"
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 0 20px;
   max-width: 480px;
   margin: 0 auto;
-`;
+`
+
 const Header = styled.header`
-  height: 15vh;
+  height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-const CoinsList = styled.ul``;
+`
+
+const CoinList = styled.ul``
+
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${props => props.theme.cardBgColor};
+  color: ${props => props.theme.textColor};
+  border: 1px solid;
   border-radius: 15px;
   margin-bottom: 10px;
+  font-size: 24px;
 
   a {
+    transition: color 150ms ease-in;
+    padding: 20px;
     display: flex;
     align-items: center;
-    padding: 20px;
-    transition: color 0.2s ease-in;
-  }
+    gap: 10px;
 
-  &:hover {
-    a {
-      color: ${(props) => props.theme.accentColor};
+    &:hover {
+      color: ${props => props.theme.accentColor}
     }
   }
-`;
-const Title = styled.h1`
+`
+
+const Title = styled.div`
   font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
-`;
+  color: ${props => props.theme.accentColor};
+`
+
 const Loader = styled.span`
-  text-align: center;
-  display: block;
-`;
+  font-size: 32px;
+  color: ${props => props.theme.accentColor};
+`
 
 const Img = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
-`;
+  width: 32px;
+  height: 32px;
+`
 
-interface CoinInterface {
-    id: string;
-    name: string;
-    symbol: string;
-    rank: number;
-    is_new: boolean;
-    is_active: boolean;
-    type: string;
+interface ICoin {
+    "id": string
+    "name": string
+    "symbol": string
+    "rank": number
+    "is_new": boolean
+    "is_active": boolean
+    "type": string
 }
 
-function Coins() {
-    const [coins, setCoins] = useState<CoinInterface[]>([]);
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        (async () => {
-            const response = await fetch("https://api.coinpaprika.com/v1/coins");
-            const json = await response.json();
-            setCoins(json.slice(0, 100));
-            setLoading(false);
-        })();
-    }, []);
+const Coins = () => {
+    const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins)
     return (
         <Container>
+            <Helmet>
+                <title>Coin Tracker</title>
+            </Helmet>
             <Header>
-                <Title>COINS</Title>
+                <Title>Coin Tracker</Title>
             </Header>
-            {loading ? (
-                <Loader>Loading...</Loader>
-            ) : (
-                <CoinsList>
-                    {coins.map((coin) => (
+            {isLoading ?
+                <Loader>Loading...</Loader> :
+                (<CoinList>
+                    {data?.slice(0, 29).map(coin =>
                         <Coin key={coin.id}>
-                            <Link
-                                to={{
-                                    pathname: `/${coin.id}`,
-                                    state: {name: coin.name},
-                                }}
-                            >
+                            <Link to={{
+                                pathname: `/${coin.id}`
+                            }} state={{
+                                name: coin.name, rank: coin.rank
+                            }}>{
                                 <Img
-                                    src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
-                                />
-                                {coin.name} &rarr;
-                            </Link>
-                        </Coin>
-                    ))}
-                </CoinsList>
-            )}
+                                    src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLocaleLowerCase()}`}
+                                    alt="Coin's icon"/>
+                            } {coin.name} &rarr;</Link>
+                        </Coin>)
+                    }
+                </CoinList>)}
         </Container>
     );
 }

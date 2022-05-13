@@ -1,8 +1,14 @@
-import {createGlobalStyle} from "styled-components";
+import React, {useState} from 'react';
 import Router from "./Router";
+import styled, {ThemeProvider} from "styled-components";
+import {lightTheme, darkTheme} from "./theme";
+import {createGlobalStyle} from "styled-components";
+import {ReactQueryDevtools} from "react-query/devtools";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {isDarkAtom} from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=Noto+Sans:wght@700&display=swap');
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -10,12 +16,12 @@ const GlobalStyle = createGlobalStyle`
   del, dfn, em, img, ins, kbd, q, s, samp,
   small, strike, strong, sub, sup, tt, var,
   b, u, i, center,
-  dl, dt, dd, menu, ol, ul, li,
+  dl, dt, dd, ol, ul, li,
   fieldset, form, label, legend,
   table, caption, tbody, tfoot, thead, tr, th, td,
   article, aside, canvas, details, embed,
   figure, figcaption, footer, header, hgroup,
-  main, menu, nav, output, ruby, section, summary,
+  menu, nav, output, ruby, section, summary,
   time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -27,59 +33,69 @@ const GlobalStyle = createGlobalStyle`
 
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure,
-  footer, header, hgroup, main, menu, nav, section {
+  footer, header, hgroup, menu, nav, section {
     display: block;
-  }
-
-  /* HTML5 hidden-attribute fix for newer browsers */
-  *[hidden] {
-    display: none;
   }
 
   body {
     line-height: 1;
-  }
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
 
-  menu, ol, ul {
-    list-style: none;
-  }
+    ol, ul {
+      list-style: none;
+    }
 
-  blockquote, q {
-    quotes: none;
-  }
+    blockquote, q {
+      quotes: none;
+    }
 
-  blockquote:before, blockquote:after,
-  q:before, q:after {
-    content: '';
-    content: none;
-  }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
 
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  * {
-    box-sizing: border-box;
-  }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
 
-  body {
-    font-family: 'Source Sans Pro', sans-serif;
-    background-color: ${(props) => props.theme.bgColor};
-    color: ${(props) => props.theme.textColor}
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-`;
+`
+const ThemeToggle = styled.button`
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 20px;
+  cursor: pointer;
+  background: ${props => props.theme.cardBgColor};
+  color: ${props => props.theme.textColor};
+  border: 1px solid;
+  padding: 10px 14px;
+`
 
 function App() {
+  const isDark = useRecoilValue(isDarkAtom)
+  const setDarkAtom = useSetRecoilState(isDarkAtom)
+  const toggleDarkAtom = () => setDarkAtom(prev => !prev)
   return (
     <>
-      <GlobalStyle/>
-      <Router/>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle/>
+        <ThemeToggle onClick={toggleDarkAtom}>{isDark ? 'Dark' : 'Light'}</ThemeToggle>
+        <Router/>
+        <ReactQueryDevtools initialIsOpen={false}/>
+      </ThemeProvider>
     </>
   );
 }
