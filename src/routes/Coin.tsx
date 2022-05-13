@@ -6,7 +6,6 @@ import {fetchCoinInfo, fetchCoinPrice} from "../api";
 import {Helmet} from "react-helmet-async";
 import Chart from "./Chart";
 
-
 const Title = styled.h1`
   font-size: 48px;
   color: ${(props) => props.theme.accentColor};
@@ -68,6 +67,7 @@ const BackButton = styled.button`
   border-radius: 10px;
   border-color: #fff;
   cursor: pointer;
+  color: #fff
 `
 
 interface RouteParams {
