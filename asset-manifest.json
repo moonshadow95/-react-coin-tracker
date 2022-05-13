@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/react-masterclass-challenge/static/js/main.b171eed4.chunk.js",
+    "main.js.map": "/react-masterclass-challenge/static/js/main.b171eed4.chunk.js.map",
+    "runtime-main.js": "/react-masterclass-challenge/static/js/runtime-main.12602559.js",
+    "runtime-main.js.map": "/react-masterclass-challenge/static/js/runtime-main.12602559.js.map",
+    "static/js/2.34afb7e4.chunk.js": "/react-masterclass-challenge/static/js/2.34afb7e4.chunk.js",
+    "static/js/2.34afb7e4.chunk.js.map": "/react-masterclass-challenge/static/js/2.34afb7e4.chunk.js.map",
+    "index.html": "/react-masterclass-challenge/index.html",
+    "precache-manifest.a3b1756e981d97eb44a86e2915345484.js": "/react-masterclass-challenge/precache-manifest.a3b1756e981d97eb44a86e2915345484.js",
+    "service-worker.js": "/react-masterclass-challenge/service-worker.js",
+    "static/js/2.34afb7e4.chunk.js.LICENSE.txt": "/react-masterclass-challenge/static/js/2.34afb7e4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.12602559.js",
+    "static/js/2.34afb7e4.chunk.js",
+    "static/js/main.b171eed4.chunk.js"
+  ]
+}
