@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7b64b60f8647b996377d9c5e269f7652",
+    "revision": "4927a9a16a2a8d5c9a31390db44f3216",
     "url": "/react-masterclass-challenge/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-masterclass-challenge/static/js/2.34afb7e4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7fc31c7d1a4a37372f48",
-    "url": "/react-masterclass-challenge/static/js/main.b171eed4.chunk.js"
+    "revision": "bccae7a967e4a0bd7cc4",
+    "url": "/react-masterclass-challenge/static/js/main.4e1ef544.chunk.js"
   },
   {
     "revision": "c59c856372524afba863",
